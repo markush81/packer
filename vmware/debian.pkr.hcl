@@ -28,13 +28,13 @@ source "vmware-iso" "debian" {
   guest_os_type     = "arm-debian12-64"
   disk_adapter_type = "nvme"
   version           = 20
-  http_directory    = "http/debian"
+  http_directory    = "../http/debian"
   boot_command = [
     "c",
     "linux /install.a64/vmlinuz",
     " auto-install/enable=true",
     " debconf/priority=critical",
-    " netcfg/get_hostname=debian-12",
+    " netcfg/hostname=debian-12",
     " netcfg/get_domain=",
     " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg --- quiet",
     "<enter>",
@@ -43,16 +43,16 @@ source "vmware-iso" "debian" {
     "boot",
     "<enter><wait>"
   ]
-  usb = true
-  vmx_data = {
-    "usb_xhci.present" = "true"
-  }
   memory               = 2048
   cpus                 = 2
   disk_size            = 20480
   vm_name              = "Debian 12.0 (arm64)"
   network_adapter_type = "e1000e"
   output_directory     = "debian"
+  usb                  = true
+  vmx_data = {
+    "usb_xhci.present" = "true"
+  }
 }
 
 build {
@@ -64,35 +64,19 @@ build {
   }
 
   provisioner "shell" {
-    inline = [
-      "mkdir -p /home/${var.user_name}/.ssh",
-      "chmod 0700 /home/${var.user_name}/.ssh",
-      "wget -O /home/${var.user_name}/.ssh/authorized_keys https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub",
-      "chmod 0600 /home/${var.user_name}/.ssh/authorized_keys"
+    environment_vars = [
+      "USER_NAME=${var.user_name}",
+      "VMWARE=1"
+    ]
+    scripts = [
+      "../scripts/debian/create-user.sh",
+      "../scripts/debian/disable-ipv6.sh",
+      "../scripts/debian/install.sh"
     ]
   }
 
-  provisioner "shell" {
-    script = "scripts/debian/disable-ipv6.sh"
-  }
-
-  provisioner "shell" {
-    inline = [
-      "sudo apt-get update -y",
-      "sudo apt-get install curl apt-transport-https open-vm-tools gpg openssl net-tools unzip -y",
-      "sudo apt-get upgrade -y",
-      "sudo apt-get dist-upgrade -y",
-      "sudo apt-get clean -y",
-      "sudo apt-get autoclean -y",
-      "sudo apt-get autoremove -y",
-      "sudo dd if=/dev/zero of=/EMPTY bs=1M || true",
-      "sudo rm -f /EMPTY",
-      "sync",
-      "cat /dev/null > ~/.bash_history",
-      "sudo passwd -l ${var.user_name}",
-      "sudo passwd -d ${var.user_name}",
-      "sudo usermod -L ${var.user_name}",
-      "sudo vmware-toolbox-cmd disk shrink /"
-    ]
+  post-processor "vagrant" {
+    compression_level              = 9
+    vagrantfile_template_generated = true
   }
 }

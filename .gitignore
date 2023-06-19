@@ -1,3 +1,6 @@
 packer_cache
-/debian
-/ubuntu
+parallels/debian
+parallels/*.box
+vmware/debian
+vmware/ubuntu
+vmware/*.box
