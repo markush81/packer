@@ -59,18 +59,18 @@ vagrant up --provider vmware_desktop
 
 ## Parallels
 
-### Debian 12.0
+### Debian 12.2
 
 - arm64 (apple silicon compatible)
 - ipv6 disabled
-- Parallels Desktop 18 Pro
+- Parallels Desktop 19 Pro
 - Parallels Tools
 
 ```bash
 cd parallels
 packer init debian.pkr.hcl
 packer build debian.pkr.hcl
-vagrant box add --name debian-12-arm64 packer_debian_parallels.box --force
+vagrant box add --name debian-12-arm64 packer_debian_parallels_arm64.box --force
 cd ..
 ```
 

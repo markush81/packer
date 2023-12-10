@@ -11,18 +11,22 @@ variable "user_pwd" {
 packer {
   required_plugins {
     parallels = {
-      version = ">= 1.0.0"
-      source  = "github.com/hashicorp/parallels"
+      version = ">= 1.1.0"
+      source  = "github.com/Parallels/parallels"
+    }
+    vagrant = {
+      source  = "github.com/hashicorp/vagrant"
+      version = "~> 1"
     }
   }
 }
 
 source "parallels-iso" "debian" {
-  iso_url          = "https://cdimage.debian.org/debian-cd/12.0.0/arm64/iso-cd/debian-12.0.0-arm64-netinst.iso"
-  iso_checksum     = "sha256:e455263fb33c71ebf8396a823cdc15ca75786efd2e86172c067a97b1fa9924a5"
+  iso_url          = "https://cdimage.debian.org/debian-cd/12.2.0/arm64/iso-cd/debian-12.2.0-arm64-netinst.iso"
+  iso_checksum     = "sha256:7b8f2ff9bd422fc1cba7d5978bace17ecf48ba23842e7e7e13b0d8ba502a7556"
   ssh_username     = "${var.user_name}"
   ssh_password     = "${var.user_pwd}"
-  ssh_timeout      = "5m"
+  ssh_timeout      = "10m"
   shutdown_command = "echo '${var.user_pwd}' | sudo -S shutdown -P now"
   guest_os_type    = "debian"
   http_directory   = "../http/debian"
@@ -43,7 +47,7 @@ source "parallels-iso" "debian" {
   memory                 = 2048
   cpus                   = 2
   disk_size              = 20480
-  vm_name                = "Debian 12.0 (arm64)"
+  vm_name                = "Debian 12.2 (arm64)"
   output_directory       = "debian"
   parallels_tools_flavor = "lin-arm"
 }
