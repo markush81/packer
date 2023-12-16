@@ -13,7 +13,7 @@
 cd vmware
 packer init debian.pkr.hcl
 packer build debian.pkr.hcl
-vagrant box add --name debian-12-arm64 packer_debian_vmware.box --force
+vagrant box add --name debian-12-arm64 packer_debian_vmware_arm64.box --force
 cd ..
 ```
 
@@ -31,7 +31,7 @@ vagrant up --provider vmware_desktop
 
 ----
 
-### Ubuntu 23.04
+### Ubuntu 23.10
 
 - arm64 (apple silicon compatible)
 - open-vm-tools
@@ -41,7 +41,7 @@ vagrant up --provider vmware_desktop
 cd vmware
 packer init ubuntu.pkr.hcl
 packer build ubuntu.pkr.hcl
-vagrant box add --name ubuntu-23.04-arm64 packer_ubuntu_vmware.box --force
+vagrant box add --name ubuntu-23.10-arm64 packer_ubuntu_vmware_arm64.box --force
 cd ..
 ```
 
@@ -49,7 +49,7 @@ Vagrantfile (>=2.3.5)
 
 ```ruby
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu-23.04-arm64"
+  config.vm.box = "ubuntu-23.10-arm64"
 end
 ```
 
@@ -74,11 +74,38 @@ vagrant box add --name debian-12-arm64 packer_debian_parallels_arm64.box --force
 cd ..
 ```
 
-:warning: in case you get the message `Failed creating Parallels driver: Parallels Virtualization SDK is not installed`, use `PYTHONPATH=/Library/Frameworks/ParallelsVirtualizationSDK.framework/Versions/10/Libraries/Python/3.7 packer build debian.pkr.hcl`.
+:warning: in case you get the message `Failed creating Parallels driver: Parallels Virtualization SDK is not installed`, use `PYTHONPATH=/Library/Frameworks/ParallelsVirtualizationSDK.framework/Versions/Current/Libraries/Python/3.7 packer build debian.pkr.hcl`.
 
 ```ruby
 Vagrant.configure("2") do |config|
   config.vm.box = "debian-12-arm64"
+end
+```
+
+```bash
+vagrant up --provider parallels
+```
+
+### Ubuntu 23.10
+
+- arm64 (apple silicon compatible)
+- open-vm-tools
+- Parallels Desktop 19 Pro
+- Parallels Tools
+
+```bash
+cd parallels
+packer init ubuntu.pkr.hcl
+packer build ubuntu.pkr.hcl
+vagrant box add --name ubuntu-23.10-arm64 packer_ubuntu_parallels_arm64.box --force
+cd ..
+```
+
+:warning: in case you get the message `Failed creating Parallels driver: Parallels Virtualization SDK is not installed`, use `PYTHONPATH=/Library/Frameworks/ParallelsVirtualizationSDK.framework/Versions/Current/Libraries/Python/3.7 packer build ubuntu.pkr.hcl`.
+
+```ruby
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu-23.10-arm64"
 end
 ```
 
