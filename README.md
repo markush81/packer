@@ -2,7 +2,7 @@
 
 ## VMware Fusion
 
-### Debian 12.0
+### Debian 12.7
 
 - arm64 (apple silicon compatible)
 - open-vm-tools
@@ -17,7 +17,7 @@ vagrant box add --name debian-12-arm64 packer_debian_vmware_arm64.box --force
 cd ..
 ```
 
-Vagrantfile (>=2.3.5)
+Vagrantfile (>=2.4.1)
 
 ```ruby
 Vagrant.configure("2") do |config|
@@ -26,6 +26,7 @@ end
 ```
 
 ```bash
+vagrant plugin install vagrant-vmware-desktop
 vagrant up --provider vmware_desktop
 ```
 
@@ -54,10 +55,13 @@ end
 ```
 
 ```bash
+vagrant plugin install vagrant-vmware-desktop
 vagrant up --provider vmware_desktop
 ```
 
 ## Parallels
+
+:warning: [DEPRECATED] the parallels part is not maintained anymore.
 
 ### Debian 12.2
 

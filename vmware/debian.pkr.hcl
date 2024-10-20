@@ -9,18 +9,22 @@ variable "user_pwd" {
 }
 
 packer {
-  required_version = ">= 1.7.0"
+  required_version = "= 1.11.2"
   required_plugins {
     vmware = {
-      version = ">= 1.0.0"
+      version = "= 1.1.0"
       source  = "github.com/hashicorp/vmware"
+    }
+    vagrant = {
+      version = "= 1.1.5"
+      source = "github.com/hashicorp/vagrant"
     }
   }
 }
 
 source "vmware-iso" "debian" {
-  iso_url           = "https://cdimage.debian.org/debian-cd/12.0.0/arm64/iso-cd/debian-12.0.0-arm64-netinst.iso"
-  iso_checksum      = "sha256:e455263fb33c71ebf8396a823cdc15ca75786efd2e86172c067a97b1fa9924a5"
+  iso_url           = "https://cdimage.debian.org/debian-cd/12.7.0/arm64/iso-cd/debian-12.7.0-arm64-netinst.iso"
+  iso_checksum      = "sha256:ff476eeee26162e42111277796cdb7470ff1f1f6203bd9bc4548d211ebf9f931"
   ssh_username      = "${var.user_name}"
   ssh_password      = "${var.user_pwd}"
   ssh_timeout       = "5m"
