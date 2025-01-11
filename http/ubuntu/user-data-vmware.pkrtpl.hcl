@@ -17,7 +17,7 @@ autoinstall:
     layout:
       name: lvm
   identity:
-    hostname: ubuntu-23_10
+    hostname: ubuntu-24_10
     realname: ${user_name}
     username: ${user_name}
     password: ${user_pwd}
@@ -54,4 +54,3 @@ autoinstall:
     disable_root: true
     locale: en_US.UTF-8
     timezone: UTC
-    late-commands: []

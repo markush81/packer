@@ -32,7 +32,7 @@ vagrant up --provider vmware_desktop
 
 ----
 
-### Ubuntu 23.10
+### Ubuntu 24.10
 
 - arm64 (apple silicon compatible)
 - open-vm-tools
@@ -42,15 +42,15 @@ vagrant up --provider vmware_desktop
 cd vmware
 packer init ubuntu.pkr.hcl
 packer build ubuntu.pkr.hcl
-vagrant box add --name ubuntu-23.10-arm64 packer_ubuntu_vmware_arm64.box --force
+vagrant box add --name ubuntu-24.10-arm64 packer_ubuntu_vmware_arm64.box --force
 cd ..
 ```
 
-Vagrantfile (>=2.3.5)
+Vagrantfile (>=2.4.1)
 
 ```ruby
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu-23.10-arm64"
+  config.vm.box = "ubuntu-24.10-arm64"
 end
 ```
 

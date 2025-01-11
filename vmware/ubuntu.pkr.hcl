@@ -14,18 +14,22 @@ variable "user_pwd_encrypted" {
 }
 
 packer {
-  required_version = ">= 1.7.0"
+  required_version = "= 1.11.2"
   required_plugins {
     vmware = {
-      version = ">= 1.0.0"
+      version = "= 1.1.0"
       source  = "github.com/hashicorp/vmware"
+    }
+    vagrant = {
+      version = "= 1.1.5"
+      source = "github.com/hashicorp/vagrant"
     }
   }
 }
 
 source "vmware-iso" "ubuntu" {
-  iso_url                = "https://cdimage.ubuntu.com/releases/23.10/release/ubuntu-23.10-live-server-arm64.iso"
-  iso_checksum           = "sha256:5ea4c792a0cc5462a975d2f253182e9678cc70172ebd444d730f2c4fd7678e43"
+  iso_url                = "https://cdimage.ubuntu.com/releases/24.10/release/ubuntu-24.10-live-server-arm64.iso"
+  iso_checksum           = "sha256:53ea39d97038ef478130e2a43264d264a7324c010b1811640e3d0bb614e6e7de"
   ssh_username           = "${var.user_name}"
   ssh_password           = "${var.user_pwd}"
   ssh_timeout            = "10m"
@@ -48,7 +52,7 @@ source "vmware-iso" "ubuntu" {
   memory               = 2048
   cpus                 = 2
   disk_size            = 20480
-  vm_name              = "Ubuntu 23.10 (arm64)"
+  vm_name              = "Ubuntu 24.10 (arm64)"
   network_adapter_type = "e1000e"
   output_directory     = "ubuntu"
   usb                  = true

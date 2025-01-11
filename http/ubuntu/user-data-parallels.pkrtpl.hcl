@@ -54,4 +54,4 @@ autoinstall:
     disable_root: true
     locale: en_US.UTF-8
     timezone: UTC
-    late-commands: []
+
